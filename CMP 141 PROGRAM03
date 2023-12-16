@@ -1,0 +1,54 @@
+# Program03.py
+# Jalen Brown
+
+# Input
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import random
+def roll_dice():
+    die1 = random.randrange(1, 7)
+    die2 = random.randrange(1, 7)
+    return die1 + die2
+
+# Creat x and y lists
+sums = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+index = 0
+index = 1
+# Processing
+ 
+
+# Simulate rolling dice max_rolls number of times
+for max_rolls in [100, 1000, 10000, 100000]:
+    # Create the values for the vertical (y-axis) axis, randomly
+    frequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
+    # Idea: Roll the dice max_rolls numbers of times updating the frequencies along the way
+    for i in range(max_rolls):
+        sum = roll_dice()
+        index = sum - 2
+        frequencies[index] += 1
+         
+    
+    
+    # Set the background style
+    sns.set_style('whitegrid')
+
+    # Creat an axes object for a seaborn bar chart
+    axes = sns.barplot(x=sums, y=frequencies)
+
+    # Create title
+    if max_rolls == 100:
+        axes.set_title("Rolling a pair of dice 100")
+        axes.set(xlabel="Dice", ylabel="Frequencies") 
+    elif max_rolls == 1000:
+        axes.set_title("Rolling a pair of dice 1000")
+        axes.set(xlabel="Dice", ylabel="Frequencies")
+    elif max_rolls == 10000:
+        axes.set_title("Rolling a pair of dice 10000")
+        axes.set(xlabel="Dice", ylabel="Frequencies")
+    else:
+        axes.set_title("Rolling a pair of dice 100000")
+        axes.set(xlabel="Dice", ylabel="Frequencies")
+    plt.show()
