@@ -1,0 +1,51 @@
+# Program05.py
+# Jalen Brown
+
+import pandas as pd
+import numpy as np
+
+# import csv
+titanic_df = pd.read_csv('titanic.csv')
+
+# create list of conditions 
+conditions = ['child=1', 'child=0', 'sex=female', 'sex=male',
+              'pclass=1', 'pclass=2', 'pclass=3',
+              'embarked=C', 'embarked=Q', 'embarked=S']
+                                                     
+#Function returns the survival rate for the given condition
+
+def survival_rate(condition): 
+    feature, delimiter, value = condition.partition('=')
+    if value.isnumeric():
+        value = int(value)
+        
+    # Select only the rows from the titanic dataframe where 'feature = value'
+    sub_df = titanic_df.loc[titanic_df[feature] == value]
+    #print(sub_df) 
+    return sub_df['survived'].mean()
+# Task 1
+titanic_df = titanic_df.dropna(subset=['age', 'sex', 'pclass', 'embarked'])
+
+# Get survival rate
+survival_rates = []
+for condition in conditions:
+    # add this survival rate to the list
+    survival_rates.append(survival_rate(condition) * 100)                                                     
+#print(survival_rates)                                                     
+
+#create a horizontal bar chart of survival rates
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#creat a new dataframe with plot variables
+plot_df = pd.DataFrame({'Conditions': conditions, 'Survival Rate': survival_rates})
+plot_df = plot_df.sort_values('Survival Rate', ascending=False)
+
+axes = sns.barplot(x=plot_df['Survival Rate'], y=plot_df['Conditions'], palette='bright')
+ax=plt.gca();
+#ax.set_xlim(1, 100, 10)
+#plt.xlim(0,100)
+#x = np.arange(0, 10)
+#plt.bar('Conditions', 'Survival Rate', data=df_sorted_desc)
+axes.set_title("Titanic Survival Rates")
+plt.show()
