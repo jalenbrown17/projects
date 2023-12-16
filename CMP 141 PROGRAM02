@@ -1,0 +1,13 @@
+# Program02.py
+# Jalen Brown
+
+# Step 1. Input subtotal and a tip rate for resturant bill
+subtotal = float(input("Enter bill amount: "))
+tip_rate = float(input("Enter tip amount (as a percent): "))
+
+# Step 2. Compute the tip amount and the total for the bill
+tip_amount = subtotal * (tip_rate / 100)
+total = subtotal + tip_amount
+
+# Step 3. Output the tip amount and the total
+print("The subtotal is",total)
